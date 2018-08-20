@@ -1,7 +1,7 @@
 # javascript-memory-game
 The title says it all dawg.
 This app is deployed here: http://www.uproariouslaughter.com/js-memory-game
-This whole thing is pretty ui around the Fisher Yates Modern Shuffle algorithm, which has been around for a really long time.  You would think that people in the software engineering business would be familiar with it. Here's a pure example of it:
+This whole thing is a pretty ui around the Fisher Yates Modern Shuffle algorithm, which has been around for a really long time.  You would think that people in the software engineering business would be familiar with it. Here's a pure example of it:
 https://gist.github.com/hoosierhuy/84affabac923959aae95a0686718b96f#file-fisheryatesmodernshufflealgo-js
 I don't think it's necessary to commit it to memory, but you just have to know what to Google search when you need it.
 
