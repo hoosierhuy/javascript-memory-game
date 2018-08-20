@@ -87,6 +87,7 @@
 		},
 
 		// Fisher--Yates Algorithm -- https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle
+		// https://gist.github.com/hoosierhuy/84affabac923959aae95a0686718b96f#file-fisheryatesmodernshufflealgo-js
 		shuffle: (array) => {
 			let counter = array.length,
 				temp,
