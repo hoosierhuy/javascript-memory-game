@@ -175,3 +175,7 @@ body {
     background: -webkit-linear-gradient(#222, black);
     background: linear-gradient(#222, black);
 }
+
+.gameFadeOut {
+    display: none;
+}

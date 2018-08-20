@@ -1,8 +1,8 @@
-// TODO: get rid of all jQuery usage
+// TODO: get rid of all jQuery usage, as time permits
 (function () {
 	const Memory = {
-		init: function (cards) {
-			this.$game = $('.game');
+		init (cards) {
+			this.gameDiv = document.querySelector('.game');
 			this.modal =  document.querySelector('.modal');
 			this.overlay = document.querySelector('.modal-overlay');
 			this.$restartButton = $('button.restart');
@@ -11,28 +11,26 @@
 			this.setup();
 		},
 
-		shuffleCards: function (cardsArray) {
+		shuffleCards (cardsArray) {
 			this.$cards = $(this.shuffle(this.cardsArray));
 		},
 
-		setup: function () {
+		setup () {
 			this.html = this.buildHTML();
-			this.$game.html(this.html);
+            this.gameDiv.innerHTML = this.html;
 			this.memoryCards = document.getElementsByClassName('card');
 			this.binding();
 			this.paused = false;
 			this.guess = null;
 		},
 
-		binding: function(){
-
-      const memoryCardsArr = [].slice.call(this.memoryCards);
-      memoryCardsArr.map(elem => elem.addEventListener('click', this.cardClicked));
+		binding (){
+      		const memoryCardsArr = [].slice.call(this.memoryCards);
+      		memoryCardsArr.map(elem => elem.addEventListener('click', this.cardClicked));
 
 			this.$restartButton.on('click', $.proxy(this.reset, this));
 		},
-		// The infamous setTimeout, (used in multiple methods, like I mentioned during the interview).  On a side note, I love Hungarian Notation, if you haven't noticed already.
-		cardClicked: function(){
+		cardClicked (){
 		  // Lo Dash is not used here, just my own notation
 			let _ = Memory;
 			let $card = $(this);
@@ -57,35 +55,42 @@
 			}
 		},
 
-		win: function(){
+		win (){
 			this.paused = true;
 			setTimeout(function(){
 				Memory.showModal();
-				Memory.$game.fadeOut();
+				Memory.gameFadeOut();
 			}, 1000);
 		},
 
-		showModal: function(){
+		showModal (){
 			this.overlay.style.display = 'block';
 			this.modal.style.display = 'block';
 		},
 
-		hideModal: function(){
+		hideModal (){
 			this.overlay.style.display = 'none';
 			this.modal.style.display = 'none';
 		},
 
-		reset: function(){
+		gameFadeOut (){
+			setTimeout(
+				() => Memory.gameDiv.classList.add('gameFadeOut'),
+			500);
+		},
+
+		reset (){
 			this.hideModal();
 			this.shuffleCards(this.cardsArray);
 			this.setup();
-			this.$game.show('slow');
+			this.gameDiv.style.display = 'block';
 		},
 
 		// Fisher--Yates Algorithm -- https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle
-		shuffle: function(array){
-			let counter = array.length, temp, index;
-			// I freaking hate loops, but in the interest of speed
+		shuffle: (array) => {
+			let counter = array.length,
+				temp,
+				index;
 			while (counter > 0) {
 				index = Math.floor(Math.random() * counter);
 				counter--;
@@ -96,22 +101,22 @@
 			return array;
 		},
 
-		// I hate doing it like this but for now, just get it up and running quickly, this is why I like ReactJS components
-		buildHTML: function(){
+		// I hate doing it like this but for now, just get it up and running quickly, this is why I like components
+		buildHTML (){
 			let frag = '';
 			this.$cards.each(function(index, val){
-				frag += '<div class="card" data-id="'+ val.id +'"><div class="inside">\
+				frag += '<section class="card" data-id="'+ val.id +'"><div class="inside">\
 				<div class="front"><img src="'+ val.img +'"\
 				alt="'+ val.name +'" /></div>\
 				<div class="back"><img src="images/topgear.jpg"\
 				alt="TopGearCrew" /></div></div>\
-				</div>';
+				</section>';
 			});
 			return frag;
 		}
 	};
 
-	// Again components are the shit.
+	// Simulated data
 	const cards = [
 		{
 			name: '4Runner',
