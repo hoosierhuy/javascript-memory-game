@@ -5,19 +5,20 @@
 			this.gameDiv = document.querySelector('.game');
 			this.modal =  document.querySelector('.modal');
 			this.overlay = document.querySelector('.modal-overlay');
-			this.$restartButton = $('button.restart');
-			this.cardsArray = $.merge(cards, cards);// ES6 has the 'spread' operator to combine/flatten [] && {}, could probably do it with reduce
+			this.restartButton = document.querySelector('button.restart');
+			this.cardsArray = [...cards, ...cards];
 			this.shuffleCards(this.cardsArray);
 			this.setup();
 		},
 
 		shuffleCards (cardsArray) {
 			this.$cards = $(this.shuffle(this.cardsArray));
+			console.log(this.$cards)
 		},
 
 		setup () {
 			this.html = this.buildHTML();
-            this.gameDiv.innerHTML = this.html;
+			this.gameDiv.innerHTML = this.html;
 			this.memoryCards = document.getElementsByClassName('card');
 			this.binding();
 			this.paused = false;
@@ -25,10 +26,9 @@
 		},
 
 		binding (){
-      		const memoryCardsArr = [].slice.call(this.memoryCards);
-      		memoryCardsArr.map(elem => elem.addEventListener('click', this.cardClicked));
-
-			this.$restartButton.on('click', $.proxy(this.reset, this));
+			const memoryCardsArr = [].slice.call(this.memoryCards);
+			memoryCardsArr.map(elem => elem.addEventListener('click', this.cardClicked));
+      this.restartButton.addEventListener('click', this.reset.bind(this));
 		},
 		cardClicked (){
 		  // Lo Dash is not used here, just my own notation
@@ -90,8 +90,8 @@
 		// https://gist.github.com/hoosierhuy/84affabac923959aae95a0686718b96f#file-fisheryatesmodernshufflealgo-js
 		shuffle: (array) => {
 			let counter = array.length,
-				temp,
-				index;
+					temp,
+					index;
 			while (counter > 0) {
 				index = Math.floor(Math.random() * counter);
 				counter--;

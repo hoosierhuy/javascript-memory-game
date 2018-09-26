@@ -1,0 +1,23 @@
+{
+  "name": "javascript-memory-game",
+  "version": "1.0.0",
+  "description": "Fisher Yates algorithm",
+  "main": "app.js",
+  "scripts": {
+    "test": "jasmine"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hoosierhuy/javascript-memory-game.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hoosierhuy/javascript-memory-game/issues"
+  },
+  "homepage": "https://github.com/hoosierhuy/javascript-memory-game#readme",
+  "devDependencies": {
+    "jasmine": "^3.2.0"
+  }
+}
