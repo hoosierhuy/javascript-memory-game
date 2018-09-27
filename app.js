@@ -33,20 +33,20 @@
 		  // Lo Dash is not used here, just my own notation
 			let _ = Memory;
 			let card = this;
-			if(!_.paused && !card.querySelector('.inside').classList.contains('matched') && !card.querySelector('.inside').classList.contains('picked')){
+			if(!_.paused && !card.querySelector('.inside').classList.contains('matched') && !card.querySelector('.inside').classList.contains('picked')) {
 				card.querySelector('.inside').classList.add('picked');
 				if(!_.guess){
-					_.guess = $(this).attr('data-id');
+					_.guess = this.getAttribute('data-id');
 				} else if(_.guess === $(this).attr('data-id') && !$(this).hasClass('picked')){
-					$('.picked').addClass('matched');
-					_.guess = null;
+						$('.picked').addClass('matched');
+						_.guess = null;
 				} else {
-					_.guess = null;
-					_.paused = true;
-					setTimeout(function(){
-						$('.picked').removeClass('picked');
-						Memory.paused = false;
-					}, 600);
+						_.guess = null;
+						_.paused = true;
+						setTimeout(function(){
+							$('.picked').removeClass('picked');
+							Memory.paused = false;
+						}, 600);
 				}
 				if($('.matched').length === $('.card').length){
 					_.win();
@@ -103,7 +103,6 @@
 
 		// I hate doing it like this but for now, just get it up and running quickly, this is why I like components
 		buildHTML (){
-			console.log( this.cards);
 			let frag = '';
 			this.cards.forEach(function(val, index){
 				frag += '<section class="card" data-id="'+ val.id +'"><div class="inside">\
