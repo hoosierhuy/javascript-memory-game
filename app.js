@@ -12,8 +12,7 @@
 		},
 
 		shuffleCards (cardsArray) {
-			this.$cards = $(this.shuffle(this.cardsArray));
-			console.log(this.$cards)
+			this.cards = this.shuffle(this.cardsArray);
 		},
 
 		setup () {
@@ -33,9 +32,9 @@
 		cardClicked (){
 		  // Lo Dash is not used here, just my own notation
 			let _ = Memory;
-			let $card = $(this);
-			if(!_.paused && !$card.find('.inside').hasClass('matched') && !$card.find('.inside').hasClass('picked')){
-				$card.find('.inside').addClass('picked');
+			let card = this;
+			if(!_.paused && !card.querySelector('.inside').classList.contains('matched') && !card.querySelector('.inside').classList.contains('picked')){
+				card.querySelector('.inside').classList.add('picked');
 				if(!_.guess){
 					_.guess = $(this).attr('data-id');
 				} else if(_.guess === $(this).attr('data-id') && !$(this).hasClass('picked')){
@@ -88,7 +87,7 @@
 
 		// Fisher--Yates Algorithm -- https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle
 		// https://gist.github.com/hoosierhuy/84affabac923959aae95a0686718b96f#file-fisheryatesmodernshufflealgo-js
-		shuffle: (array) => {
+		shuffle (array){
 			let counter = array.length,
 					temp,
 					index;
@@ -104,8 +103,9 @@
 
 		// I hate doing it like this but for now, just get it up and running quickly, this is why I like components
 		buildHTML (){
+			console.log( this.cards);
 			let frag = '';
-			this.$cards.each(function(index, val){
+			this.cards.forEach(function(val, index){
 				frag += '<section class="card" data-id="'+ val.id +'"><div class="inside">\
 				<div class="front"><img src="'+ val.img +'"\
 				alt="'+ val.name +'" /></div>\
