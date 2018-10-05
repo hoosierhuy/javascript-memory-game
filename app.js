@@ -1,4 +1,3 @@
-// TODO: get rid of all jQuery usage, as time permits
 (function () {
 	const Memory = {
 		init (cards) {
@@ -24,37 +23,40 @@
 			this.guess = null;
 		},
 
-		binding (){
+		binding () {
 			const memoryCardsArr = [].slice.call(this.memoryCards);
 			memoryCardsArr.map(elem => elem.addEventListener('click', this.cardClicked));
       this.restartButton.addEventListener('click', this.reset.bind(this));
 		},
-		cardClicked (){
+		cardClicked () {
 		  // Lo Dash is not used here, just my own notation
 			let _ = Memory;
 			let card = this;
-			if(!_.paused && !card.querySelector('.inside').classList.contains('matched') && !card.querySelector('.inside').classList.contains('picked')) {
+			if ((!_.paused) && (!card.querySelector('.inside').classList.contains('matched'))
+                      && (!card.querySelector('.inside').classList.contains('picked'))) {
 				card.querySelector('.inside').classList.add('picked');
-				if(!_.guess){
+				if (!_.guess) {
 					_.guess = this.getAttribute('data-id');
-				} else if(_.guess === $(this).attr('data-id') && !$(this).hasClass('picked')){
-						$('.picked').addClass('matched');
+				} else if (_.guess === this.getAttribute('data-id') && !this.classList.contains('picked')) {
+           let matchedNodeList = document.querySelectorAll('.picked');
+           matchedNodeList.forEach(match => match.classList.add('matched'));
 						_.guess = null;
 				} else {
 						_.guess = null;
 						_.paused = true;
-						setTimeout(function(){
-							$('.picked').removeClass('picked');
+						setTimeout(() => {
+              let matchedNodeList = document.querySelectorAll('.picked');
+              matchedNodeList.forEach(nonMatch => nonMatch.classList.remove('picked'));
 							Memory.paused = false;
 						}, 600);
 				}
-				if($('.matched').length === $('.card').length){
+				if(document.querySelectorAll('.matched').length === document.querySelectorAll('.card').length) {
 					_.win();
 				}
 			}
 		},
 
-		win (){
+		win () {
 			this.paused = true;
 			setTimeout(function(){
 				Memory.showModal();
@@ -62,23 +64,23 @@
 			}, 1000);
 		},
 
-		showModal (){
+		showModal () {
 			this.overlay.style.display = 'block';
 			this.modal.style.display = 'block';
 		},
 
-		hideModal (){
+		hideModal () {
 			this.overlay.style.display = 'none';
 			this.modal.style.display = 'none';
 		},
 
-		gameFadeOut (){
+		gameFadeOut () {
 			setTimeout(
 				() => Memory.gameDiv.classList.add('gameFadeOut'),
 			500);
 		},
 
-		reset (){
+		reset () {
 			this.hideModal();
 			this.shuffleCards(this.cardsArray);
 			this.setup();
@@ -87,7 +89,7 @@
 
 		// Fisher--Yates Algorithm -- https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle
 		// https://gist.github.com/hoosierhuy/84affabac923959aae95a0686718b96f#file-fisheryatesmodernshufflealgo-js
-		shuffle (array){
+		shuffle (array) {
 			let counter = array.length,
 					temp,
 					index;
@@ -102,9 +104,9 @@
 		},
 
 		// I hate doing it like this but for now, just get it up and running quickly, this is why I like components
-		buildHTML (){
+		buildHTML () {
 			let frag = '';
-			this.cards.forEach(function(val, index){
+			this.cards.forEach((val, index) => {
 				frag += '<section class="card" data-id="'+ val.id +'"><div class="inside">\
 				<div class="front"><img src="'+ val.img +'"\
 				alt="'+ val.name +'" /></div>\
